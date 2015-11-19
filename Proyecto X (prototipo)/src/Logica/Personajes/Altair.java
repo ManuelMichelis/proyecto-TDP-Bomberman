@@ -1,5 +1,5 @@
 package Logica.Personajes;
-import Grafica.GraficaPersonaje;
+import Grafica.GraficaAltair;
 import Logica.Celdas.Celda;
 
 /**
@@ -9,14 +9,13 @@ public class Altair extends Enemigo {
 	
 	public Altair(Celda c, Bomberman b) {
 		super(c,b);
-		velocidad = 1;
+		velocidad = 2;
+		modoDios = true;
+		grafica = new GraficaAltair(c.getX(),c.getY());
+		hilo=new AltairThread(this);
 	}
 	
 	
-	public GraficaPersonaje getGrafica() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 }

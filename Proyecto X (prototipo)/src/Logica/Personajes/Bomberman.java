@@ -17,7 +17,6 @@ public class Bomberman extends Personaje {
 	private int cantBombasSimult;
 	private int poderDeExplosion;
 	private int direccion=0;
-	private Thread hilo;
 	
 	
 	// CONSTRUCTOR
@@ -169,10 +168,4 @@ public class Bomberman extends Personaje {
 		direccion=dir;
 	}
 	
-	/**
-	 * Inicia el hilo de ejecución de bomberman.
-	 */
-	public void ejecutarHilo(){
-		hilo.start();
-	}
 }

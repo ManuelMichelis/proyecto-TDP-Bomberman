@@ -3,7 +3,7 @@ import Grafica.GUI;
 import Logica.Personajes.*;
 public class Juego {
 	
-	
+	private static Enemigo[] malos=new Enemigo[6];
 	public static void main(String []args){
 		
 		//Creamos tablero
@@ -11,27 +11,48 @@ public class Juego {
 		//Inicializamos el tablero
 		tab.inicializarTablero();
 		
-		//Creamos al bomberman
+		// CREAMOS A BOMBERMAN
 		Bomberman bomberman=new Bomberman(tab.getCelda(1, 1));
 		tab.getCelda(1, 1).setBomberman(bomberman);
 		
-		//Creamos los enemigos (por ahora solo un rugulus)
+		// CREAMOS LOS RUGULOS
+		int i=0;
 		Rugulos rugulos1 =new Rugulos(tab.getCelda(15, 1),bomberman);
-		tab.getCelda(15, 1).setEnemigo(rugulos1);
+		tab.getCelda(15, 1).recibirEnemigo(rugulos1);
+		malos[i++]=rugulos1;
+		Rugulos rugulos2 =new Rugulos(tab.getCelda(15, 1),bomberman);
+		tab.getCelda(15, 1).recibirEnemigo(rugulos2);
+		malos[i++]=rugulos2;
+		Rugulos rugulos3 =new Rugulos(tab.getCelda(15, 1),bomberman);
+		tab.getCelda(15, 1).recibirEnemigo(rugulos3);
+		malos[i++]=rugulos3;
 		
+		// CREAMOS LOS ALTAIR
+		Altair altair1 =new Altair(tab.getCelda(15, 1),bomberman);
+		tab.getCelda(15, 1).recibirEnemigo(altair1);
+		malos[i++]=altair1;
+		Altair altair2 =new Altair(tab.getCelda(15, 1),bomberman);
+		tab.getCelda(15, 1).recibirEnemigo(altair2);
+		malos[i++]=altair2;		
+		
+		// CREAMOS EL SIRIUS
+		Sirius sirius =new Sirius(tab.getCelda(15, 1),bomberman);
+		tab.getCelda(15, 1).recibirEnemigo(sirius);
+		malos[i++]=sirius;
 		
 		GUI gui =new GUI("Bomberman",tab);
 		gui.setBomberman(bomberman);
 		
 //		gui.add(rugulos1.getGrafica().getGrafico());
 		//Ejecutamos los hilos de los enemigos (por ahora solo un rugulus)
-		ejecutarHilos(tab,rugulos1,bomberman);
+		ejecutarHilos(tab,malos,bomberman);
 	}
 
 	
-	private static void ejecutarHilos(Tablero tab,Rugulos rug,Bomberman bom){
+	private static void ejecutarHilos(Tablero tab,Enemigo[] malos,Bomberman bom){
 		
 		bom.ejecutarHilo();
-		rug.ejecutarHilo();
+		for(Enemigo e:malos)
+			e.ejecutarHilo();
 	}
 }

@@ -24,12 +24,6 @@ public class Rugulos extends Enemigo {
 		
 	}
 	
-	
-	// COMANDOS
-	
-	/**
-	 * Inicia el hilo de ejecución de este enemigo.
-	 */
 	public void ejecutarHilo(){
 		hilo.start();
 	}

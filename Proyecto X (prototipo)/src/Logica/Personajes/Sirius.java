@@ -1,6 +1,6 @@
 package Logica.Personajes;
 
-import Grafica.GraficaPersonaje;
+import Grafica.GraficaSirius;
 import Logica.Celdas.Celda;
 
 /**
@@ -11,14 +11,15 @@ public class Sirius extends Enemigo {
 	// ATRIBUTOS
 	
 	/**
-	 * 
 	 * @param c
 	 * @param b
 	 */
 	public Sirius(Celda c, Bomberman b) {
 		super(c,b);
-		velocidad = 3;
+		velocidad = 4;
 		modoDios = false;
+		grafica = new GraficaSirius(c.getX(),c.getY());
+		hilo=new SiriusThread(this);
 	}
 	
 	/**
@@ -26,12 +27,23 @@ public class Sirius extends Enemigo {
 	 * @return dirección a la cual le es conveniente moverse para alcanzar a bomberman.
 	 */
 	public int pensar() {
-		// Pendiente para la próxima entrega.
-		return 0;
+		Celda destino = miEnemigo.getUbicacion();
+		int xDestino = destino.getX();
+		int yDestino = destino.getY();
+		int dx = Math.abs(xDestino - miUbicacion.getX());
+		int dy = Math.abs(yDestino - miUbicacion.getY());
+		int dir = 1;
+		if (dx < dy) {
+			if (xDestino < miUbicacion.getX())
+				dir = 4;
+			else dir = 3;
+		}
+		else {
+				if (yDestino < miUbicacion.getY())
+					dir = 1;
+				else dir = 2;
+			 }
+		return dir;
 	}
 
-	public GraficaPersonaje getGrafica() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

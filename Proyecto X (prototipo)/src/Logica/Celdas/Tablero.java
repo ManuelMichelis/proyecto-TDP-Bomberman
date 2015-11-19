@@ -64,7 +64,6 @@ public class Tablero {
 			x=rnd.nextInt(21);
 			y=rnd.nextInt(21);
 			if(!sonPares(x,y) && !esBorde(x,y) && !esSpawn(x,y)){
-				//POR AHORA COMENTAMOS LO DE AQUI ABAJO YA QUE NO HABRA PAREDES DESTRUCTIBLES, MAS ADELANTE LO PONDREMOS
 				misCeldas[x][y].setPared(new Destructible(misCeldas[x][y]));
 				destructiblesRestantes--;
 				

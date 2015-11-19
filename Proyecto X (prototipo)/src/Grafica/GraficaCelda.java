@@ -28,18 +28,24 @@ public class GraficaCelda {
 	 * Setea el icono de la celda con fuego tras una explosion
 	 */
 	public void serExplotada(){
+		//grafico=new JLabel(sprites[1]);
 		grafico.setIcon(sprites[1]);
+	}
+	public void sacarExplosion(){
+		grafico.setIcon(null);
 	}
 	/**
 	 * Setea el icono de la celda como una bomba tras ser puesta por Bomberman en esa celda
 	 */
 	public void ponerBomba(){
+		//grafico=new JLabel(sprites[0]);
 		grafico.setIcon(sprites[0]);
 	}
 	/**
 	 * Quita el icono de bomba de la celda 
 	 */
 	public void sacarBomba(){
+		//grafico=null;
 		grafico.setIcon(null);
 	}
 

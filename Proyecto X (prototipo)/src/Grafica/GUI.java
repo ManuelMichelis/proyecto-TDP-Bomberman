@@ -60,11 +60,49 @@ public class GUI extends JFrame{
 		//Seteamos las configuraciones de la ventana de la GUI
 		contenedor=this.getContentPane();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(680,706);
+		setSize(850,706);
 		setResizable(false);
 		setLocation(400,0);
 		contenedor.setBackground(new Color(0, 128, 0));	
 		contenedor.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
+		panel.setBounds(680, 0, 164, 677);
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Puntaje : ");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setBounds(10, 138, 81, 26);
+		lblNewLabel.setFont(new Font("Calibri", Font.BOLD, 20));
+		panel.add(lblNewLabel);
+		
+		JLabel lblTiempo = new JLabel("Tiempo : ");
+		lblTiempo.setFont(new Font("Calibri", Font.BOLD, 20));
+		lblTiempo.setForeground(Color.WHITE);
+		lblTiempo.setBounds(10, 175, 81, 26);
+		panel.add(lblTiempo);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(GUI.class.getResource("/Imagenes/Bomberman/Quieto.gif")));
+		label.setBounds(10, 258, 28, 45);
+		panel.add(label);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon(GUI.class.getResource("/Imagenes/Azul/Quieto.gif")));
+		label_1.setBounds(48, 258, 28, 44);
+		panel.add(label_1);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setIcon(new ImageIcon(GUI.class.getResource("/Imagenes/Negro/Quieto.gif")));
+		label_2.setBounds(86, 258, 28, 45);
+		panel.add(label_2);
+		
+		JLabel label_3 = new JLabel("");
+		label_3.setIcon(new ImageIcon(GUI.class.getResource("/Imagenes/Rojo/Quieto.gif")));
+		label_3.setBounds(124, 258, 28, 45);
+		panel.add(label_3);
 		
 		//Inicializamos todos los graficos
 		inicializarImagenes();
@@ -79,6 +117,15 @@ public class GUI extends JFrame{
 				contenedor.add(tablero.getCelda(i, j).getGrafica().getGrafico());
 				tablero.getCelda(i, j).getGrafica().getGrafico().setBounds(i*lado,j*lado,lado,lado);
 				
+				if(!tablero.getCelda(i, j).getEnemigos().isEmpty()){
+					Iterator<Enemigo> it=tablero.getCelda(i, j).getEnemigos().iterator();
+					while(it.hasNext()){
+						JLabel labelaux=it.next().getGrafica().getGrafico();
+						contenedor.add(labelaux);
+						labelaux.setBounds(i*lado, j*lado, lado, lado);
+					}	
+				}
+				
 				if(tablero.getCelda(i, j).getPared()!=null){
 					contenedor.add(tablero.getCelda(i, j).getPared().getGrafica().getGrafico());
 					tablero.getCelda(i, j).getPared().getGrafica().getGrafico().setBounds(i*lado,j*lado,lado,lado);
@@ -91,14 +138,8 @@ public class GUI extends JFrame{
 					contenedor.add(tablero.getCelda(i, j).getBomberman().getGrafica().getGrafico());
 					tablero.getCelda(i, j).getBomberman().getGrafica().getGrafico().setBounds(i*lado,j*lado,lado,lado);
 				}
-				if(!tablero.getCelda(i, j).getEnemigos().isEmpty()){
-					Iterator<Enemigo> it=tablero.getCelda(i, j).getEnemigos().iterator();
-					while(it.hasNext()){
-						JLabel labelaux=it.next().getGrafica().getGrafico();
-						contenedor.add(labelaux);
-						labelaux.setBounds(i*lado, j*lado, lado, lado);
-					}	
-				}				
+				
+								
 			}
 	}
 	/**
@@ -108,5 +149,4 @@ public class GUI extends JFrame{
 	public void setBomberman(Bomberman b){
 		bomberman=b;
 	}
-
 }

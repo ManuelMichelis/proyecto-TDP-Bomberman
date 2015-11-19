@@ -14,6 +14,7 @@ public abstract class Personaje {
 	protected int velocidad;
 	protected boolean modoDios;
 	protected GraficaPersonaje grafica;
+	protected Thread hilo;
 	
 	
 	// CONSTRUCTOR
@@ -83,5 +84,12 @@ public abstract class Personaje {
 	 */
 	public GraficaPersonaje getGrafica(){
 		return grafica;
+	}
+	
+	/**
+	 * Ejecuta el hilo del personaje
+	 */
+	public void ejecutarHilo(){
+		hilo.start();
 	}
 }

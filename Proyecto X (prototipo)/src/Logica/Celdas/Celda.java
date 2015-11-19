@@ -90,15 +90,6 @@ public class Celda {
     }
 
     /**
-     * Agrega un enemigo (nulo o no) a la celda (guardándolo en un Vector de enemigos).
-     * @param Enemigo e: enemigo a añadir.
-     */
-    public void setEnemigo(Enemigo e){        
-    	misEnemigos.add(e);
-    	
-    }
-    
-    /**
      * Agrega un powerUp (nulo o no) a la celda.
      * @param p: powerUp a añadir.
      */
@@ -148,6 +139,7 @@ public class Celda {
     	}
     	if(miBomberman != null)
     		miBomberman.morir();
+    	
     }
     
     /**
@@ -183,6 +175,7 @@ public class Celda {
 				break;
 				}
 		}
+    	Bomba b=destino.getBomba();
     	Pared p = destino.getPared();
    		if(p!= null){
    				boolean puedeAvanzar = p.serAtravesada(pers);
@@ -191,11 +184,11 @@ public class Celda {
    					pers.getGrafica().mover(d, pers.getVelocidad());
    				}
     		}
-    	else{
-    		pers.cambiarPosicion(destino);
-    		pers.getGrafica().mover(d, pers.getVelocidad());
-    		
-    	}
+    	else if (b == null) {
+    					pers.cambiarPosicion(destino);
+    			pers.getGrafica().mover(d, pers.getVelocidad());
+    			}
+    	
    		Vector<Enemigo> enemigos = destino.getEnemigos();
    		Bomberman bomberman = destino.getBomberman();
    		if(!enemigos.isEmpty() && bomberman != null){
@@ -281,5 +274,13 @@ public class Celda {
      */
     public GraficaCelda getGrafica(){
     	return grafica;
+    }
+    
+    /**
+     * Retorna la bomba de esta celda.
+     * @return bomba de esta celda.
+     */
+    public Bomba getBomba(){
+    	return miBomba;
     }
 }

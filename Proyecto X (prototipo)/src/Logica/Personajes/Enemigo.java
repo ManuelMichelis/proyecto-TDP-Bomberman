@@ -12,7 +12,6 @@ public abstract class Enemigo extends Personaje {
 	
 	protected Bomberman miEnemigo;
 	protected static int valor;
-	protected Thread hilo;
 	
 	// CONSTRUCTOR
 	
@@ -31,6 +30,8 @@ public abstract class Enemigo extends Personaje {
 	
 	public void morir() {
 		miEnemigo.sumarPuntos(valor);
+		hilo.destroy();
+		grafica.destruir();
 	}
 	
 	

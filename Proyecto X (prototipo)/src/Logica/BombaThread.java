@@ -38,8 +38,12 @@ public class BombaThread extends Thread {
 						if(b.getAlcance()[i]!=null)
 							b.getAlcance()[i].serExplotada();
 					b.getUbicacion().setBomba(null);
-					b.getDueño().sumarCantBombasSimult(); 
 					
+					b.getDueño().sumarCantBombasSimult(); 
+					Thread.sleep(2000);
+					for(int i=0; i<b.getAlcance().length; i++)
+						if(b.getAlcance()[i]!=null)
+							b.getAlcance()[i].getGrafica().sacarExplosion();
 					detener=true;
 			}
 		
