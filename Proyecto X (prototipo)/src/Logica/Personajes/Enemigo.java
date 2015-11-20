@@ -30,7 +30,7 @@ public abstract class Enemigo extends Personaje {
 	
 	public void morir() {
 		miEnemigo.sumarPuntos(valor);
-		hilo.destroy();
+		hilo.interrupt();
 		grafica.destruir();
 	}
 	

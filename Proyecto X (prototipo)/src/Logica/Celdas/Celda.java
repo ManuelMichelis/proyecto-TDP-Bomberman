@@ -133,7 +133,7 @@ public class Celda {
     		miPared.destruir();
     	Iterator<Enemigo> it=misEnemigos.iterator();
     	while(it.hasNext()){
-    		Enemigo e=it.next();
+    		Enemigo e = it.next();
     		e.morir();
     		misEnemigos.removeElement(e);
     	}
@@ -210,45 +210,54 @@ public class Celda {
      * @param poder: poder de la explosión.
      * @return arreglo de celdas afectadas por una explosión iniciada en esta celda.
      */
-    public Celda[] sectorEnPeligro(int poder){
-    	Celda[] sector=new Celda[poder*4];	
-    	int pos=0;
-    	boolean seguir=true;
-		for(int i=1;i<poder+1 && seguir;i++){
-			if(miTablero.getCelda(x+i,y).getPared()==null)
-				sector[pos++]=miTablero.getCelda(x+i,y);
-			else {
-				sector[pos++]=miTablero.getCelda(x+i, y);
-				seguir=false;
-			}
+    public Celda[] sectorEnPeligro(int pod){
+    	Celda[] sector = new Celda[pod*4];
+    	int i=0;
+    	int corrimiento=1;
+    	boolean encontrePared = false; 
+    	
+    	// RECORRO A LA DERECHA
+    	while (corrimiento <= pod && !encontrePared) {
+    		sector[i] = miTablero.getCelda(x+corrimiento,y);
+    		corrimiento++;
+    		if (sector[i].getPared()!=null)
+				encontrePared = true;
+    		i++;			
     	}
-		seguir=true;
-		for(int i=1;i<poder+1 && seguir;i++){
-			if(miTablero.getCelda(x-i, y).getPared()==null)
-				sector[pos++]=miTablero.getCelda(x-i, y);
-			else {
-				sector[pos++]=miTablero.getCelda(x-i, y);
-				seguir=false;
-			}
-		}
-		seguir=true;
-		for(int i=1;i<poder+1 && seguir;i++){
-			if(miTablero.getCelda(x, y+i).getPared()==null)
-				sector[pos++]=miTablero.getCelda(x, y+i);
-			else {
-				sector[pos++]=miTablero.getCelda(x, y+i);
-				seguir=false;
-			}
-		}
-    	seguir=true;
-    	for(int i=1;i<poder+1 && seguir;i++){
-			if(miTablero.getCelda(x, y-i).getPared()==null)
-				sector[pos++]=miTablero.getCelda(x, y-i);
-			else {
-				sector[pos++]=miTablero.getCelda(x, y-i);
-				seguir=false;
-			}
-		}
+    	
+    	// RECORRO A LA IZQUIERDA
+    	encontrePared = false;
+    	corrimiento = 1;
+    	while (corrimiento <= pod && !encontrePared) {
+    		sector[i] = miTablero.getCelda(x-corrimiento,y);
+    		corrimiento++;
+    		if (sector[i].getPared()!=null)
+				encontrePared = true;
+    		i++;			
+    	}
+		
+    	// RECORRO HACIA ARRIBA
+    	encontrePared = false;
+    	corrimiento = 1;
+    	while (corrimiento <= pod && !encontrePared) {
+    		sector[i] = miTablero.getCelda(x,y+corrimiento);
+    		corrimiento++;
+    		if (sector[i].getPared()!=null)
+				encontrePared = true;
+    		i++;			
+    	}
+    	
+		// RECORRO HACIA ABAJO
+    	encontrePared = false;
+    	corrimiento = 1;
+    	while (corrimiento <= pod && !encontrePared) {
+    		sector[i] = miTablero.getCelda(x,y-corrimiento);
+    		corrimiento++;
+    		if (sector[i].getPared()!=null)
+				encontrePared = true;
+    		i++;			
+    	}
+    	
     	return sector;
     }
     

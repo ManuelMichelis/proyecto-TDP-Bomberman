@@ -28,7 +28,7 @@ public class SiriusThread extends Thread {
 	public void run() {
 		while(!detener){
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 				int direccion = s.pensar();
 				s.mover(direccion);
 			} catch (InterruptedException e){}

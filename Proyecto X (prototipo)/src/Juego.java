@@ -36,8 +36,8 @@ public class Juego {
 		malos[i++]=altair2;		
 		
 		// CREAMOS EL SIRIUS
-		Sirius sirius =new Sirius(tab.getCelda(15, 1),bomberman);
-		tab.getCelda(15, 1).recibirEnemigo(sirius);
+		Sirius sirius =new Sirius(tab.getCelda(19,19),bomberman);
+		tab.getCelda(19,19).recibirEnemigo(sirius);
 		malos[i++]=sirius;
 		
 		GUI gui =new GUI("Bomberman",tab);
