@@ -1,5 +1,7 @@
 package Grafica;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -20,6 +22,12 @@ public class GUI extends JFrame{
 	private Tablero tablero;
 	private Container contenedor;
 	private Bomberman bomberman;
+	private JPanel panelJuego,panelEstado;
+	private JLabel puntaje,tiempo;
+	private JMenuBar menu;
+	private JMenu menuJuego,menuOpciones;
+	private JMenuItem menuItemNuevo,menuItemSalir,menuItemControles;
+		
 	
 	/**
 	 * Constructor de la GUI:
@@ -32,17 +40,12 @@ public class GUI extends JFrame{
 	public GUI(String s,Tablero t){
 		super(s);		
 		tablero=t;
+		
+		
 		//Evento por teclado
+		
 		addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				/*
-				 * Arriba es > 38
-					Abajo es > 40
-					Derecha es > 39
-					Izquierda es > 37
-					Space es > 32
-				 */
+			public void keyPressed(KeyEvent arg0) {
 				if(!bomberman.estaMuerto())
 					switch(arg0.getKeyCode()){
 						case 32: {bomberman.ponerBomba(); break;}
@@ -57,52 +60,60 @@ public class GUI extends JFrame{
 				}	
 			}
 		});
+		
+		
 		//Seteamos las configuraciones de la ventana de la GUI
-		contenedor=this.getContentPane();
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(850,706);
+		
+		setSize(880,744);
 		setResizable(false);
-		setLocation(400,0);
-		contenedor.setBackground(new Color(0, 128, 0));	
+		contenedor = getContentPane();
+		contenedor.setBackground(new Color(222, 184, 135));
 		contenedor.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.DARK_GRAY);
-		panel.setBounds(680, 0, 164, 677);
-		getContentPane().add(panel);
-		panel.setLayout(null);
+		panelJuego = new JPanel();
+		panelJuego.setSize(672,672);
+		panelJuego.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panelJuego.setBackground(new Color(46, 139, 87));
+		panelJuego.setBounds(10, 11, 672, 672);
+		contenedor.add(panelJuego);
+		panelJuego.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Puntaje : ");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(10, 138, 81, 26);
-		lblNewLabel.setFont(new Font("Calibri", Font.BOLD, 20));
-		panel.add(lblNewLabel);
+		panelEstado = new JPanel();
+		panelEstado.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panelEstado.setBackground(new Color(244, 164, 96));
+		panelEstado.setBounds(696, 11, 168, 672);
+		contenedor.add(panelEstado);
+		panelEstado.setLayout(null);
 		
-		JLabel lblTiempo = new JLabel("Tiempo : ");
-		lblTiempo.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblTiempo.setForeground(Color.WHITE);
-		lblTiempo.setBounds(10, 175, 81, 26);
-		panel.add(lblTiempo);
+		puntaje = new JLabel("PUNTAJE:");
+		puntaje.setFont(new Font("Tempus Sans ITC", Font.BOLD, 15));
+		puntaje.setBounds(10, 32, 122, 26);
+		panelEstado.add(puntaje);
 		
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(GUI.class.getResource("/Imagenes/Bomberman/Quieto.gif")));
-		label.setBounds(10, 258, 28, 45);
-		panel.add(label);
+		tiempo = new JLabel("TIEMPO:");
+		tiempo.setFont(new Font("Tempus Sans ITC", Font.BOLD, 16));
+		tiempo.setBounds(10, 244, 122, 33);
+		panelEstado.add(tiempo);
 		
-		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon(GUI.class.getResource("/Imagenes/Azul/Quieto.gif")));
-		label_1.setBounds(48, 258, 28, 44);
-		panel.add(label_1);
+		menu = new JMenuBar();
+		menu.setBackground(UIManager.getColor("Button.shadow"));
+		setJMenuBar(menu);
 		
-		JLabel label_2 = new JLabel("");
-		label_2.setIcon(new ImageIcon(GUI.class.getResource("/Imagenes/Negro/Quieto.gif")));
-		label_2.setBounds(86, 258, 28, 45);
-		panel.add(label_2);
+		menuJuego = new JMenu("Juego");
+		menu.add(menuJuego);
 		
-		JLabel label_3 = new JLabel("");
-		label_3.setIcon(new ImageIcon(GUI.class.getResource("/Imagenes/Rojo/Quieto.gif")));
-		label_3.setBounds(124, 258, 28, 45);
-		panel.add(label_3);
+		menuItemNuevo = new JMenuItem("Nuevo juego");
+		menuJuego.add(menuItemNuevo);
+		
+		menuItemSalir = new JMenuItem("Salir");
+		menuJuego.add(menuItemSalir);
+		
+		menuOpciones = new JMenu("Opciones");
+		menu.add(menuOpciones);
+		
+		menuItemControles = new JMenuItem("Controles");
+		menuOpciones.add(menuItemControles);
+		
 		
 		//Inicializamos todos los graficos
 		inicializarImagenes();
@@ -114,28 +125,28 @@ public class GUI extends JFrame{
 	public void inicializarImagenes(){
 		for(int i=0;i<21;i++)
 			for(int j=0;j<21;j++){
-				contenedor.add(tablero.getCelda(i, j).getGrafica().getGrafico());
+				panelJuego.add(tablero.getCelda(i, j).getGrafica().getGrafico());
 				tablero.getCelda(i, j).getGrafica().getGrafico().setBounds(i*lado,j*lado,lado,lado);
 				
 				if(!tablero.getCelda(i, j).getEnemigos().isEmpty()){
 					Iterator<Enemigo> it=tablero.getCelda(i, j).getEnemigos().iterator();
 					while(it.hasNext()){
 						JLabel labelaux=it.next().getGrafica().getGrafico();
-						contenedor.add(labelaux);
+						panelJuego.add(labelaux);
 						labelaux.setBounds(i*lado, j*lado, lado, lado);
 					}	
 				}
 				
 				if(tablero.getCelda(i, j).getPared()!=null){
-					contenedor.add(tablero.getCelda(i, j).getPared().getGrafica().getGrafico());
+					panelJuego.add(tablero.getCelda(i, j).getPared().getGrafica().getGrafico());
 					tablero.getCelda(i, j).getPared().getGrafica().getGrafico().setBounds(i*lado,j*lado,lado,lado);
 				}
 				if(tablero.getCelda(i, j).getPowerUp()!=null){
-					contenedor.add(tablero.getCelda(i, j).getPowerUp().getGrafica().getGrafico());
+					panelJuego.add(tablero.getCelda(i, j).getPowerUp().getGrafica().getGrafico());
 					tablero.getCelda(i, j).getPowerUp().getGrafica().getGrafico().setBounds(i*lado,j*lado,lado,lado);
 				}
 				if(tablero.getCelda(i, j).getBomberman()!=null){
-					contenedor.add(tablero.getCelda(i, j).getBomberman().getGrafica().getGrafico());
+					panelJuego.add(tablero.getCelda(i, j).getBomberman().getGrafica().getGrafico());
 					tablero.getCelda(i, j).getBomberman().getGrafica().getGrafico().setBounds(i*lado,j*lado,lado,lado);
 				}
 				
